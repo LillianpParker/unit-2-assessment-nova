@@ -1,7 +1,7 @@
 require('dotenv').config()
 const React = require('react');
 const mongoURI = process.env.MONGO_URI;
-const todo = require('./models/toDo.js');
+const ToDo = require('./models/toDo.js');
 const express = require('express');
 const mongoose = require('mongoose');
 const methodOverride = require('method-override');
@@ -21,11 +21,21 @@ mongoose.connection.once('open', ()=> {
 });
 
 //Index Route
-
 app.get('/to-do', (req, res) => {
+    ToDo.find({}, (error, allToDo) => {
     res.render('Index', {
         title: "To Do List", 
-        todo: todo})
+        toDos: allToDo})
+    })
+})
+
+//Create
+app.post('/to-do', (req, res) => {
+    req.body.Completed = req.body.Completed === 'on'
+    
+    ToDo.create(req.body, (error, createdToDo) => {
+        res.redirect('/to-do')
+    })
 })
 
 app.listen(3000, () => {

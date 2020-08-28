@@ -5,6 +5,6 @@ const toDoSchema = new mongoose.Schema({
     Completed: Boolean
 });
 
-const toDo = mongoose.model('ToDo', toDoSchema)
+const ToDo = mongoose.model('ToDo', toDoSchema)
 
-module.exports = toDo;
+module.exports = ToDo;
